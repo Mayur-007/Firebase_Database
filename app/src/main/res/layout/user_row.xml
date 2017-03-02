@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/material_keyline">
+
+    <ImageView
+        android:id="@+id/user_picture"
+        android:layout_width="@dimen/material_keyline_huge"
+        android:layout_height="@dimen/material_keyline_huge"
+        android:layout_centerVertical="true"
+        android:src="@drawable/user_dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/material_keyline_half"
+        android:layout_toRightOf="@+id/user_picture"
+        android:orientation="vertical"
+        android:padding="@dimen/material_keyline_quarter">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_keyline_quarter"
+            android:textStyle="bold"
+            tools:text="Mayur Patanvadiya" />
+
+        <TextView
+            android:id="@+id/user_about"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_keyline_quarter"
+            tools:text="Android Developer" />
+
+    </LinearLayout>
+</RelativeLayout>
