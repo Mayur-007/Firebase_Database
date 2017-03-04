@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by Mayur on 2/2/2017.
@@ -62,7 +63,67 @@ public class UserListPresenter implements UserListContract.Presenter {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                final User user = dataSnapshot.getValue(User.class);
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmResults<User> result = realm.where(User.class).equalTo(User.USER_ID,user.id).findAll();
+                        result.deleteAllFromRealm();
+                    }
+                });
+                getUsersOffline();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void addListener() {
+        mFirebaseDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                try {
+                    User user = dataSnapshot.getValue(User.class);
+                    realm.beginTransaction();
+                    realm.copyToRealmOrUpdate(user);
+                    realm.commitTransaction();
+                    getUsersOffline();
+                } catch (Exception ignored) {}
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                try {
+                    User user = dataSnapshot.getValue(User.class);
+                    realm.beginTransaction();
+                    realm.copyToRealmOrUpdate(user);
+                    realm.commitTransaction();
+                    getUsersOffline();
+                } catch (Exception ignored) {}
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                try {
+                    final User user = dataSnapshot.getValue(User.class);
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            RealmResults<User> result = realm.where(User.class).equalTo(User.USER_ID, user.id).findAll();
+                            result.deleteAllFromRealm();
+                        }
+                    });
+                    getUsersOffline();
+                } catch (Exception ignored) {}
             }
 
             @Override

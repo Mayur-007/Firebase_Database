@@ -20,5 +20,7 @@ public class UserListContract {
         void getUsersOffline();
 
         void addUser(String id, String name, String about, String image);
+
+        void addListener();
     }
 }

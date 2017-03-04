@@ -44,17 +44,14 @@ public class UserListView extends AppCompatActivity implements UserListContract.
         listUser = (RecyclerView) findViewById(R.id.list_users);
         mainLayout = (CoordinatorLayout) findViewById(R.id.user_list_main);
 
-        userAdapter = new UserAdapter(dataUsers);
+        userAdapter = new UserAdapter(context, dataUsers);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         listUser.setLayoutManager(mLayoutManager);
         listUser.setItemAnimator(new DefaultItemAnimator());
         listUser.setAdapter(userAdapter);
 
-        presenter.addUser("1", "Anand","CEO","----");
-        presenter.addUser("2", "Arnab Saha","Tech Lead","---");
-        presenter.addUser("3", "Mayur Patanvadiya","Android Dev","----");
-
         presenter.getUsersOffline();
+        presenter.addListener();
     }
 
     @Override
